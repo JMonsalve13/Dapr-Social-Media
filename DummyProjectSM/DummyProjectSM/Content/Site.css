@@ -22,3 +22,27 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.logo{
+    height:50px;
+    width:50px;
+}
+
+.navbar{
+    background-color:white;
+    border:solid 1px turquoise;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color:turquoise;
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color: #46c5e5;
+    }
+
+    .textlogo{
+        margin:5px;
+        height:40px;
+        width:140px;
+    }
