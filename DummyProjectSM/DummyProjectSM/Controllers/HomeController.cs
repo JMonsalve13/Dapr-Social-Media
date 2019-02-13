@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,30 +9,11 @@ namespace DummyProjectSM.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string email)
         {
-            return View();
-        }
+            email = User.Identity.GetUserName();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Profile(string isNull)
-        {
-            isNull = null;
-
-            if (isNull == null)
+            if (email.Equals(""))
             {
                 return View("../Account/Login");
             }
@@ -39,6 +21,12 @@ namespace DummyProjectSM.Controllers
             {
                 return View();
             }
+
+        }
+
+        public ActionResult Profile()
+        {
+            return View();
         }
     }
 }

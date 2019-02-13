@@ -50,3 +50,18 @@ textarea {
 footer{
     color: #46c5e5;
 }
+
+.loginlogo{
+    height:100px;
+    width:100px;
+}
+
+.logintextlogo {
+    height: 70px;
+    width: 275px;
+}
+
+.center{
+    text-align:center;
+    display:block;
+}
