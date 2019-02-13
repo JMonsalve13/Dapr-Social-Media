@@ -26,5 +26,19 @@ namespace DummyProjectSM.Controllers
 
             return View();
         }
+
+        public ActionResult Profile(string isNull)
+        {
+            isNull = null;
+
+            if (isNull == null)
+            {
+                return View("../Account/Login");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }
