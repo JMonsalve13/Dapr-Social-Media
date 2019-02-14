@@ -9,9 +9,9 @@ namespace DummyProjectSM.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string email)
+        public ActionResult Index()
         {
-            email = User.Identity.GetUserName();
+            string email = User.Identity.GetUserName();
 
             if (email.Equals(""))
             {
