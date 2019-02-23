@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -73,6 +74,40 @@ namespace DummyProjectSM.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Index(HttpPostedFileBase file, UserModel model, ManageMessageId? message)
+        {
+            var userId = User.Identity.GetUserId();
+            var model2 = new IndexViewModel
+            {
+                HasPassword = HasPassword(),
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                Logins = await UserManager.GetLoginsAsync(userId),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+            };
+
+            try
+            {
+                if (file.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(file.FileName);
+                    string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
+                    file.SaveAs(_path);
+                    model.ProfilePicURL = _FileName;
+                }
+                ViewBag.Message = "File Uploaded Successfully!!";
+
+
+                return View(model2);
+            }
+            catch
+            {
+                ViewBag.Message = "File upload failed!!";
+                return View(model2);
+            }
         }
 
         //
@@ -274,6 +309,24 @@ namespace DummyProjectSM.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        //
+        //Get: /Manage/ChangeProfilePic
+            public ActionResult ChangePic(UserModel model)
+            {
+
+            var postedFile =  Request.Files["FileUpload"];
+
+            if (postedFile != null && postedFile.ContentLength > 0)
+            {
+                string filePath = Server.MapPath("~/Uploads/") + Path.GetFileName(postedFile.FileName);
+                postedFile.SaveAs(filePath);
+
+            model.ProfilePicURL = filePath;
+            }
+
+            return View("");
         }
 
         //
