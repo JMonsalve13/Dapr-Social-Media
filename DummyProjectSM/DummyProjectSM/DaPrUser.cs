@@ -24,6 +24,7 @@ namespace DummyProjectSM
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserBio { get; set; }
+        public string ProfilePicURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

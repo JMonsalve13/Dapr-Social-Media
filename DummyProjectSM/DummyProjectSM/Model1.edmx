@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="foodiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="foodiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Comment">
@@ -25,6 +25,7 @@ warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key d
           <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UserEmail" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="UserBio" Type="varchar" MaxLength="1000" />
+          <Property Name="ProfilePicURL" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Post">
           <Key>
@@ -83,21 +84,10 @@ warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key d
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="foodiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="DaPrUser">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserBio" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_User_ID" FromRole="DaPrUser" ToRole="Comment" />
-        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="PostID" />
@@ -118,23 +108,9 @@ warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key d
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="PostID" Type="Int32" Nullable="false" />
           <Property Name="TXT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="DaPrUser" Relationship="Self.FK_Comment_User_ID" FromRole="Comment" ToRole="DaPrUser" />
           <NavigationProperty Name="Post" Relationship="Self.FK_Comment_Post_ID" FromRole="Comment" ToRole="Post" />
+          <NavigationProperty Name="DaPrUser" Relationship="foodiesModel.FK_Comment_User_ID" FromRole="Comment" ToRole="DaPrUser" />
         </EntityType>
-        <Association Name="FK_Comment_User_ID">
-          <End Role="DaPrUser" Type="Self.DaPrUser" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DaPrUser">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Comment_Post_ID">
           <End Role="Post" Type="Self.Post" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -150,34 +126,49 @@ warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key d
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="foodiesEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="DaPrUsers" EntityType="Self.DaPrUser" />
           <EntitySet Name="Posts" EntityType="Self.Post" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <AssociationSet Name="FK_Comment_User_ID" Association="Self.FK_Comment_User_ID">
-            <End Role="DaPrUser" EntitySet="DaPrUsers" />
-            <End Role="Comment" EntitySet="Comments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Comment_Post_ID" Association="Self.FK_Comment_Post_ID">
             <End Role="Post" EntitySet="Posts" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
+          <EntitySet Name="DaPrUsers" EntityType="foodiesModel.DaPrUser" />
+          <AssociationSet Name="FK_Comment_User_ID" Association="foodiesModel.FK_Comment_User_ID">
+            <End Role="DaPrUser" EntitySet="DaPrUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="DaPrUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserBio" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comments" Relationship="foodiesModel.FK_Comment_User_ID" FromRole="DaPrUser" ToRole="Comment" />
+        </EntityType>
+        <Association Name="FK_Comment_User_ID">
+          <End Type="foodiesModel.DaPrUser" Role="DaPrUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="foodiesModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaPrUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="foodiesModelStoreContainer" CdmEntityContainer="foodiesEntities">
-          <EntitySetMapping Name="DaPrUsers">
-            <EntityTypeMapping TypeName="foodiesModel.DaPrUser">
-              <MappingFragment StoreEntitySet="DaPrUser">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
-                <ScalarProperty Name="UserBio" ColumnName="UserBio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Posts">
             <EntityTypeMapping TypeName="foodiesModel.Post">
               <MappingFragment StoreEntitySet="Post">
@@ -195,6 +186,17 @@ warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key d
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="PostID" ColumnName="PostID" />
                 <ScalarProperty Name="TXT" ColumnName="TXT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaPrUsers">
+            <EntityTypeMapping TypeName="foodiesModel.DaPrUser">
+              <MappingFragment StoreEntitySet="DaPrUser">
+                <ScalarProperty Name="ProfilePicURL" ColumnName="ProfilePicURL" />
+                <ScalarProperty Name="UserBio" ColumnName="UserBio" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,6 +20,7 @@ warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key d
     <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="UserEmail" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="UserBio" Type="varchar" MaxLength="1000" />
+    <Property Name="ProfilePicURL" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Post">
     <Key>

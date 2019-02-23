@@ -156,13 +156,16 @@ namespace DummyProjectSM.Controllers
 
                 using (var context = new foodiesEntities())
                 {
+
                     var newUser = new DaPrUser();
+
+                    newUser.UserName = model.Username;
 
                     newUser.UserEmail = model.Email;
 
                     context.DaPrUsers.Add(newUser);
 
-                    //context.SaveChanges();
+                    context.SaveChanges();
                 }
 
                 if (result.Succeeded)

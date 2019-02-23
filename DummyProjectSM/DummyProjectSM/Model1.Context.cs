@@ -25,8 +25,8 @@ namespace DummyProjectSM
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DaPrUser> DaPrUsers { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<DaPrUser> DaPrUsers { get; set; }
     }
 }

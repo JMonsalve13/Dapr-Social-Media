@@ -89,6 +89,8 @@ namespace DummyProjectSM.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
 
+            var userEmail = UserManager.GetEmail(userId);
+
             try
             {
                 if (file.ContentLength > 0)
@@ -97,6 +99,15 @@ namespace DummyProjectSM.Controllers
                     string _path = Path.Combine(Server.MapPath("~/UploadedFiles"), _FileName);
                     file.SaveAs(_path);
                     model.ProfilePicURL = _FileName;
+
+                    using (var context = new foodiesEntities())
+                    {
+                        var userToUpdate = context.DaPrUsers.FirstOrDefault(m => m.UserEmail == userEmail);
+
+                        userToUpdate.ProfilePicURL = "../UploadedFiles/" + _FileName;
+
+                        context.SaveChanges();
+                    };
                 }
                 ViewBag.Message = "File Uploaded Successfully!!";
 
@@ -309,24 +320,6 @@ namespace DummyProjectSM.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        //
-        //Get: /Manage/ChangeProfilePic
-            public ActionResult ChangePic(UserModel model)
-            {
-
-            var postedFile =  Request.Files["FileUpload"];
-
-            if (postedFile != null && postedFile.ContentLength > 0)
-            {
-                string filePath = Server.MapPath("~/Uploads/") + Path.GetFileName(postedFile.FileName);
-                postedFile.SaveAs(filePath);
-
-            model.ProfilePicURL = filePath;
-            }
-
-            return View("");
         }
 
         //

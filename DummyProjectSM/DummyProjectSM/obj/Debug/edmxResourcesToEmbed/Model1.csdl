@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="foodiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="DaPrUser">
-    <Key>
-      <PropertyRef Name="UserID" />
-    </Key>
-    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="UserEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="UserBio" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Comments" Relationship="Self.FK_Comment_User_ID" FromRole="DaPrUser" ToRole="Comment" />
-  </EntityType>
   <EntityType Name="Post">
     <Key>
       <PropertyRef Name="PostID" />
@@ -30,23 +20,9 @@
     <Property Name="UserID" Type="Int32" Nullable="false" />
     <Property Name="PostID" Type="Int32" Nullable="false" />
     <Property Name="TXT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="DaPrUser" Relationship="Self.FK_Comment_User_ID" FromRole="Comment" ToRole="DaPrUser" />
     <NavigationProperty Name="Post" Relationship="Self.FK_Comment_Post_ID" FromRole="Comment" ToRole="Post" />
+    <NavigationProperty Name="DaPrUser" Relationship="foodiesModel.FK_Comment_User_ID" FromRole="Comment" ToRole="DaPrUser" />
   </EntityType>
-  <Association Name="FK_Comment_User_ID">
-    <End Role="DaPrUser" Type="Self.DaPrUser" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DaPrUser">
-        <PropertyRef Name="UserID" />
-      </Principal>
-      <Dependent Role="Comment">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Comment_Post_ID">
     <End Role="Post" Type="Self.Post" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -62,16 +38,41 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="foodiesEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="DaPrUsers" EntityType="Self.DaPrUser" />
     <EntitySet Name="Posts" EntityType="Self.Post" />
     <EntitySet Name="Comments" EntityType="Self.Comment" />
-    <AssociationSet Name="FK_Comment_User_ID" Association="Self.FK_Comment_User_ID">
-      <End Role="DaPrUser" EntitySet="DaPrUsers" />
-      <End Role="Comment" EntitySet="Comments" />
-    </AssociationSet>
     <AssociationSet Name="FK_Comment_Post_ID" Association="Self.FK_Comment_Post_ID">
       <End Role="Post" EntitySet="Posts" />
       <End Role="Comment" EntitySet="Comments" />
     </AssociationSet>
+    <EntitySet Name="DaPrUsers" EntityType="foodiesModel.DaPrUser" />
+    <AssociationSet Name="FK_Comment_User_ID" Association="foodiesModel.FK_Comment_User_ID">
+      <End Role="DaPrUser" EntitySet="DaPrUsers" />
+      <End Role="Comment" EntitySet="Comments" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="DaPrUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="UserBio" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="ProfilePicURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Comments" Relationship="foodiesModel.FK_Comment_User_ID" FromRole="DaPrUser" ToRole="Comment" />
+  </EntityType>
+  <Association Name="FK_Comment_User_ID">
+    <End Type="foodiesModel.DaPrUser" Role="DaPrUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="foodiesModel.Comment" Role="Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DaPrUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
