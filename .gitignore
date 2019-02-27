@@ -328,3 +328,15 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+DummyProjectSM/.vs/DummyProjectSM/v15/.suo
+DummyProjectSM/.vs/DummyProjectSM/v15/.suo
+*.ide-shm
+DummyProjectSM/.vs/DummyProjectSM/v15/Server/sqlite3/storage.ide-shm
+DummyProjectSM/.vs/DummyProjectSM/v15/.suo
+DummyProjectSM/.vs/DummyProjectSM/v15/Server/sqlite3/storage.ide-wal
+DummyProjectSM/DummyProjectSM/App_Data/aspnet-DummyProjectSM-20190211073151.mdf
+DummyProjectSM/DummyProjectSM/App_Data/aspnet-DummyProjectSM-20190211073151_log.ldf
+DummyProjectSM/DummyProjectSM/bin/DummyProjectSM.dll
+DummyProjectSM/DummyProjectSM/bin/DummyProjectSM.pdb
+DummyProjectSM/DummyProjectSM/obj/Debug/DummyProjectSM.dll
+DummyProjectSM/DummyProjectSM/obj/Debug/DummyProjectSM.pdb
