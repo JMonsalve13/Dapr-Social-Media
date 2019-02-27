@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="foodiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Comment">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="PostID" />
+      <PropertyRef Name="TXT" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="PostID" Type="int" Nullable="false" />
+    <Property Name="TXT" Type="varchar" MaxLength="1000" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DaPrUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserEmail" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="UserBio" Type="varchar" MaxLength="1000" />
+    <Property Name="ProfilePicURL" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="PostID" />
+    </Key>
+    <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostTitle" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="PostURL" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="PostImageURL" Type="varchar" MaxLength="500" />
+    <Property Name="PostText" Type="varchar" MaxLength="3000" />
+  </EntityType>
+  <Association Name="FK_Comment_Post_ID">
+    <End Role="Post" Type="Self.Post" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="PostID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="PostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comment_User_ID">
+    <End Role="DaPrUser" Type="Self.DaPrUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DaPrUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="foodiesModelStoreContainer">
+    <EntitySet Name="DaPrUser" EntityType="Self.DaPrUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Comment" EntityType="Self.Comment" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Comment].[UserID] AS [UserID], 
+    [Comment].[PostID] AS [PostID], 
+    [Comment].[TXT] AS [TXT]
+    FROM [dbo].[Comment] AS [Comment]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Comment_Post_ID" Association="Self.FK_Comment_Post_ID">
+      <End Role="Post" EntitySet="Post" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comment_User_ID" Association="Self.FK_Comment_User_ID">
+      <End Role="DaPrUser" EntitySet="DaPrUser" />
+      <End Role="Comment" EntitySet="Comment" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

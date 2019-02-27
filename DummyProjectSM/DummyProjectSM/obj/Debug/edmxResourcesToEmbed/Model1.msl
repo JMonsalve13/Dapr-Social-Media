@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="foodiesModelStoreContainer" CdmEntityContainer="foodiesEntities">
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="foodiesModel.Post">
+        <MappingFragment StoreEntitySet="Post">
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+          <ScalarProperty Name="PostURL" ColumnName="PostURL" />
+          <ScalarProperty Name="PostImageURL" ColumnName="PostImageURL" />
+          <ScalarProperty Name="PostText" ColumnName="PostText" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Comments">
+      <EntityTypeMapping TypeName="foodiesModel.Comment">
+        <MappingFragment StoreEntitySet="Comment">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="TXT" ColumnName="TXT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DaPrUsers">
+      <EntityTypeMapping TypeName="foodiesModel.DaPrUser">
+        <MappingFragment StoreEntitySet="DaPrUser">
+          <ScalarProperty Name="ProfilePicURL" ColumnName="ProfilePicURL" />
+          <ScalarProperty Name="UserBio" ColumnName="UserBio" />
+          <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
