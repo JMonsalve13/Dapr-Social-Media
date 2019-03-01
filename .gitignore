@@ -340,3 +340,11 @@ DummyProjectSM/DummyProjectSM/bin/DummyProjectSM.dll
 DummyProjectSM/DummyProjectSM/bin/DummyProjectSM.pdb
 DummyProjectSM/DummyProjectSM/obj/Debug/DummyProjectSM.dll
 DummyProjectSM/DummyProjectSM/obj/Debug/DummyProjectSM.pdb
+
+*.config
+
+*.cache
+
+DummyProjectSM/DummyProjectSM/bin/
+
+DummyProjectSM/DummyProjectSM/
