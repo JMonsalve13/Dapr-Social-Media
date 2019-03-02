@@ -1,0 +1,133 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: mintcream;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.logo{
+    height:50px;
+    width:50px;
+}
+
+.navbar{
+    background-color:white;
+    border: 1px solid turquoise;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color:turquoise;
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color: #46c5e5;
+    }
+
+    .textlogo{
+        margin:5px;
+        height:40px;
+        width:140px;
+    }
+
+footer{
+    color: #46c5e5;
+}
+
+.loginlogo{
+    height:100px;
+    width:100px;
+}
+
+.logintextlogo {
+    height: 70px;
+    width: 275px;
+}
+
+.center{
+    text-align:center;
+    display:block;
+}
+
+.profilepic{
+    border-radius: 50%;
+    width:125px;
+    height:125px;
+}
+
+.galleryimg {
+    height: 150px;
+    width: 150px;
+}
+
+.gallerybox {
+    width: 151px;
+    height: 151px;
+    border: solid 2px #46c5e5;
+    float: left;
+    margin: 10px;
+    background-color: #46c5e5;
+}
+
+footer {
+    clear: both;
+}
+
+.galleryvid{
+    height: 150px;
+    width: 150px;
+}
+
+.deledit{
+    clear:both;
+}
+.Register {
+    font-family: 'Sniglet', cursive;
+    color: #46c5e5;
+    font-size: 42px;
+}
+.Create {
+    font-family: 'Sniglet', cursive;
+    color: #46c5e5;
+    font-size: 24px;
+}
+.RegisterKeys {
+    font-family: 'Sniglet', cursive;
+    color: #46c5e5;
+    font-size: 18px;
+}
+input[type=submit] {
+    padding: 5px 15px;
+    background: #46c5e5;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border-color: white;
+    font-weight:bold;
+}
+    input[type=submit]:hover {
+        padding: 5px 15px;
+        background: white;
+        color: #46c5e5;
+        cursor: pointer;
+        border-radius: 5px;
+        border-color: #46c5e5;
+    }

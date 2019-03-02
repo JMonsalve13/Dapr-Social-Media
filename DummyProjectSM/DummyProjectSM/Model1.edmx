@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="foodiesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'foodies.dbo.Comment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="PostID" />
+            <PropertyRef Name="TXT" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PostID" Type="int" Nullable="false" />
+          <Property Name="TXT" Type="varchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DaPrUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserEmail" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserBio" Type="varchar" MaxLength="1000" />
+          <Property Name="ProfilePicURL" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="PostTitle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PostURL" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="PostImageURL" Type="varchar" MaxLength="500" />
+          <Property Name="PostText" Type="varchar" MaxLength="3000" />
+          <Property Name="IsVideo" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Post_ID">
+          <End Role="Post" Type="Self.Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User_ID">
+          <End Role="DaPrUser" Type="Self.DaPrUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaPrUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="foodiesModelStoreContainer">
+          <EntitySet Name="DaPrUser" EntityType="Self.DaPrUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Comment].[UserID] AS [UserID], 
+    [Comment].[PostID] AS [PostID], 
+    [Comment].[TXT] AS [TXT]
+    FROM [dbo].[Comment] AS [Comment]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Comment_Post_ID" Association="Self.FK_Comment_Post_ID">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User_ID" Association="Self.FK_Comment_User_ID">
+            <End Role="DaPrUser" EntitySet="DaPrUser" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="foodiesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="PostID" />
+            <PropertyRef Name="TXT" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PostID" Type="Int32" Nullable="false" />
+          <Property Name="TXT" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DaPrUser" Relationship="foodiesModel.FK_Comment_User_ID" FromRole="Comment" ToRole="DaPrUser" />
+          <NavigationProperty Name="Post" Relationship="foodiesModel.FK_Comment_Post_ID" FromRole="Comment" ToRole="Post" />
+        </EntityType>
+        <EntityContainer Name="foodiesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="DaPrUsers" EntityType="foodiesModel.DaPrUser" />
+          <AssociationSet Name="FK_Comment_User_ID" Association="foodiesModel.FK_Comment_User_ID">
+            <End Role="DaPrUser" EntitySet="DaPrUsers" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <EntitySet Name="Posts" EntityType="foodiesModel.Post" />
+          <AssociationSet Name="FK_Comment_Post_ID" Association="foodiesModel.FK_Comment_Post_ID">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="DaPrUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserBio" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comments" Relationship="foodiesModel.FK_Comment_User_ID" FromRole="DaPrUser" ToRole="Comment" />
+        </EntityType>
+        <Association Name="FK_Comment_User_ID">
+          <End Type="foodiesModel.DaPrUser" Role="DaPrUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="foodiesModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaPrUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="PostID" />
+          </Key>
+          <Property Name="PostID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="PostTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostURL" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PostImageURL" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PostText" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="IsVideo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="foodiesModel.FK_Comment_Post_ID" FromRole="Post" ToRole="Comment" />
+        </EntityType>
+        <Association Name="FK_Comment_Post_ID">
+          <End Type="foodiesModel.Post" Role="Post" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="foodiesModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="PostID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="PostID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="foodiesModelStoreContainer" CdmEntityContainer="foodiesEntities">
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="foodiesModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+                <ScalarProperty Name="TXT" ColumnName="TXT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaPrUsers">
+            <EntityTypeMapping TypeName="foodiesModel.DaPrUser">
+              <MappingFragment StoreEntitySet="DaPrUser">
+                <ScalarProperty Name="ProfilePicURL" ColumnName="ProfilePicURL" />
+                <ScalarProperty Name="UserBio" ColumnName="UserBio" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Posts">
+            <EntityTypeMapping TypeName="foodiesModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="IsVideo" ColumnName="IsVideo" />
+                <ScalarProperty Name="PostText" ColumnName="PostText" />
+                <ScalarProperty Name="PostImageURL" ColumnName="PostImageURL" />
+                <ScalarProperty Name="PostURL" ColumnName="PostURL" />
+                <ScalarProperty Name="PostTitle" ColumnName="PostTitle" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PostID" ColumnName="PostID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
