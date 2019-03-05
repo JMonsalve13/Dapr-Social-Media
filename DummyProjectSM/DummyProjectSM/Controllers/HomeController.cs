@@ -41,7 +41,12 @@ namespace DummyProjectSM.Controllers
             }
         }
 
-        public ActionResult Profile()
+        public ViewResult About()
+        {
+            throw new NotImplementedException();
+        }
+
+        public new ActionResult Profile()
         {
 
             string email = User.Identity.GetUserName();
@@ -69,6 +74,11 @@ namespace DummyProjectSM.Controllers
 
             return View(model);
 
+        }
+
+        public ViewResult Contact()
+        {
+            throw new NotImplementedException();
         }
 
         public ActionResult Gallery(PostModel model)
