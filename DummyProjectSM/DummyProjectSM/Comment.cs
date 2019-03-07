@@ -18,7 +18,7 @@ namespace DummyProjectSM
         public int PostID { get; set; }
         public string TXT { get; set; }
     
-        public virtual Post Post { get; set; }
         public virtual DaPrUser DaPrUser { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

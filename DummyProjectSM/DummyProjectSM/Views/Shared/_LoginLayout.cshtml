@@ -6,7 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <link href="https://fonts.googleapis.com/css?family=Sniglet:800" rel="stylesheet">
+    <link href="~/Content/Site.css/" rel="stylesheet">
 </head>
 <body>
     <p class="center"><img src="~/Images/foodieslogonotext.png" class="loginlogo" /></p>
@@ -15,7 +16,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - foodies inc.</p>
+            <center><p>&copy; @DateTime.Now.Year - foodies inc.</p></center>
         </footer>
     </div>
 

@@ -1,0 +1,13 @@
+﻿@model DummyProjectSM.Models.UserPostsModel
+
+@{
+    ViewBag.Title = "Gallery";
+}
+
+<h2>Gallery</h2>
+
+@foreach(var post in Model.UserPosts)
+{
+    @Html.Partial("_GalleryBoxPartial", post)
+}
+

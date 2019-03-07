@@ -154,7 +154,7 @@ namespace DummyProjectSM.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
-                using (var context = new foodiesEntities())
+                using (var context = new foodiesEntities1())
                 {
 
                     var newUser = new DaPrUser();

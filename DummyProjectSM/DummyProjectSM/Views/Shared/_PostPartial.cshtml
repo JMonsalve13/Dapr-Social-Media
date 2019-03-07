@@ -1,0 +1,26 @@
+﻿@model DummyProjectSM.Models.PostModel
+
+<div>
+    @Model.PostTitle
+</div>
+<div class="gallerybox">
+    @if (Model.IsVideo == false)
+    {
+            <img class="galleryimg" src="@Model.PostURL" />
+    }
+    else
+    {
+            <video class="galleryvid" controls="controls">
+                <source src="@Model.PostURL" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+    }
+</div>
+<div class="deledit">
+    <a href="/Home/Delete/@Model.PostID">
+        DELETE
+    </a>
+    <a href="/Home/Update/@Model.PostID">
+        EDIT
+    </a>
+</div>

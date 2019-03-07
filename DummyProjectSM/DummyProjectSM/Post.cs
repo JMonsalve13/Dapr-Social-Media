@@ -21,10 +21,12 @@ namespace DummyProjectSM
         }
     
         public int PostID { get; set; }
+        public Nullable<int> UserID { get; set; }
         public string PostTitle { get; set; }
         public string PostURL { get; set; }
         public string PostImageURL { get; set; }
         public string PostText { get; set; }
+        public bool IsVideo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

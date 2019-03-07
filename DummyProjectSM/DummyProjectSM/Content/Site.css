@@ -72,3 +72,62 @@ footer{
     width:125px;
     height:125px;
 }
+
+.galleryimg {
+    height: 150px;
+    width: 150px;
+}
+
+.gallerybox {
+    width: 151px;
+    height: 151px;
+    border: solid 2px #46c5e5;
+    float: left;
+    margin: 10px;
+    background-color: #46c5e5;
+}
+
+footer {
+    clear: both;
+}
+
+.galleryvid{
+    height: 150px;
+    width: 150px;
+}
+
+.deledit{
+    clear:both;
+}
+.Register {
+    font-family: 'Sniglet', cursive;
+    color: #46c5e5;
+    font-size: 42px;
+}
+.Create {
+    font-family: 'Sniglet', cursive;
+    color: #46c5e5;
+    font-size: 24px;
+}
+label{
+    font-family: 'Sniglet', cursive;
+    color: #46c5e5;
+    font-size: 18px;
+}
+input[type=submit] {
+    padding: 5px 15px;
+    background: #46c5e5;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border-color: white;
+    font-weight:bold;
+}
+    input[type=submit]:hover {
+        padding: 5px 15px;
+        background: white;
+        color: #46c5e5;
+        cursor: pointer;
+        border-radius: 5px;
+        border-color: #46c5e5;
+    }

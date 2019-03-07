@@ -100,7 +100,7 @@ namespace DummyProjectSM.Controllers
                     file.SaveAs(_path);
                     model.ProfilePicURL = _FileName;
 
-                    using (var context = new foodiesEntities())
+                    using (var context = new foodiesEntities1())
                     {
                         var userToUpdate = context.DaPrUsers.FirstOrDefault(m => m.UserEmail == userEmail);
 

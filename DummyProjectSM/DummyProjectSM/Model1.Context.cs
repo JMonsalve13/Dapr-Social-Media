@@ -13,10 +13,10 @@ namespace DummyProjectSM
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class foodiesEntities : DbContext
+    public partial class foodiesEntities1 : DbContext
     {
-        public foodiesEntities()
-            : base("name=foodiesEntities")
+        public foodiesEntities1()
+            : base("name=foodiesEntities1")
         {
         }
     
@@ -25,8 +25,8 @@ namespace DummyProjectSM
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<DaPrUser> DaPrUsers { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
     }
 }
